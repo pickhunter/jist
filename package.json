@@ -1,0 +1,24 @@
+{
+  "name": "jist",
+  "version": "0.0.0",
+  "description": "Expressive JSON generator for generating JSON responses easily",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pickhunter/jist.git"
+  },
+  "keywords": [
+    "json",
+    "response",
+    "generator"
+  ],
+  "author": "rohhittt@gmail.com <Rohit Garg>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pickhunter/jist/issues"
+  },
+  "homepage": "https://github.com/pickhunter/jist#readme"
+}
