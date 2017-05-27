@@ -1,5 +1,10 @@
+const Jist = require('./jist');
+
 module.exports = {
-  convert: (strategy, input) => {
-    return strategy.apply({}, input);
+  convert: (input, strategy) => {
+    let jist = new Jist(input);
+    strategy.apply(jist, [jist]);
+
+    return jist._output;
   }
 };
