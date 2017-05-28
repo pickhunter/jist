@@ -1,0 +1,47 @@
+{
+   "intent":"browse.big-item",
+   "parameters":{
+      "big-item":"bed",
+      "geo-city":""
+   },
+   "query":"bed",
+   "results":[
+      {
+         "type":"Package",
+         "facets":[
+            {
+               "name":"color",
+               "value":"Blue"
+            },
+            {
+               "name":"material",
+               "value":"Solid Wood"
+            },
+            {
+               "name":"bedType",
+               "value":"Queen"
+            }
+         ],
+         "data":{
+            "name":"Allen Bed",
+            "description":"Awesome bed"
+         }
+      }
+   ],
+   "relatedDimensions":[
+      {
+         "_id":"59282fa147380c23a1d3789d",
+         "displayName":"Relax",
+         "name":"relax",
+         "rank":2
+      }
+   ],
+   "suggestedDimensions":[
+      {
+         "_id":"59282fa147380c23a1d3789b",
+         "displayName":"Bed",
+         "name":"bed",
+         "rank":1
+      }
+   ]
+}
