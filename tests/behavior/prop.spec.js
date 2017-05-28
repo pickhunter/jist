@@ -2,7 +2,7 @@ const _ = require('lodash');
 const should = require('should');
 const jist = require('../../index');
 
-describe('Conversion', () => {
+describe('Conversion by prop', () => {
 
   it('should set a property through the set method', () => {
     let sourceData = {

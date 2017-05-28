@@ -2,23 +2,23 @@ const _ = require('lodash');
 const should = require('should');
 const jist = require('../../index');
 
-describe('Conversion by pick', () => {
+describe('Conversion by except', () => {
 
-  it('should pick and leave the rest from an object', () => {
+  it('should leave and pick the rest from an object', () => {
     let sourceData = {
       key1: 'foo',
       key2: 'bar'
     };
     
     let conversion = jist.convert(sourceData, function(jist) {
-      jist.pick('key1');
+      jist.except('key2');
     });
 
     conversion.key1.should.equal('foo');
     conversion.should.not.have.property('key2');
   });
 
-  it('should pick and leave the rest from an array', () => {
+  it('should leave and pick the rest from an array', () => {
     let sourceData = [{
       key1: 'foo',
       key2: 'bar'
@@ -28,7 +28,7 @@ describe('Conversion by pick', () => {
     }];
     
     let conversion = jist.convert(sourceData, (jist) => {
-      jist.pick('key1');
+      jist.except('key2');
     });
 
     conversion.length.should.equal(sourceData.length);

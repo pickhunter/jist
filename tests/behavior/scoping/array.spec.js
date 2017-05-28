@@ -19,7 +19,6 @@ describe('Conversion', () => {
     });
 
     conversion.length.should.equal(sourceData.length);
-    console.log(conversion);
 
     conversion.forEach((e) => {
       e.key3.should.equal('value3');
