@@ -16,28 +16,28 @@ let proxy = new Proxy(Jist, {
   construct: function(target, argumentsList, newTarget) {
     let h = {
       get: function(target, prop, receiver) {
-        // console.log(`Prop: ${prop}`);
+        let input = target.output || target._input;
+
         if(_.includes(_.keys(methods), prop)) {
           return function() {
-            let input = target.output || target._input;
+            
             let method = methods[prop];
             let output = null;
             if(_.isArray(target._input) && method._applicableOnArray) {
               output = target._input.map(e => method.apply(target, [e, ...arguments]));
             }
             else {
-              output = method.apply(target, [target._input, ...arguments, proxy]);
+              output = method.apply(target, [target._input, ...arguments]);
             }
 
             target._output = output;
           }
         } else if(!target[prop]) {
-          return function(val) {
-            let input = target.output || target._input;
+          return function() {
+            let method = methods.set;
+            output = method.apply(target, [target._input, prop, ...arguments]);
 
-            input[prop] = val;
-
-            target._output = input;
+            target._output = output;
           };
         } else {
           return target[prop];
