@@ -4,31 +4,36 @@ const methods = require('./methods');
 class Jist {
   constructor(input) {
     this._input = input;
-    this._output = null;
+  }
+
+  get output() {
+    return this._output;
   }
 }
 
 let proxy = new Proxy(Jist, {
 
   construct: function(target, argumentsList, newTarget) {
-    var h = {
+    let h = {
       get: function(target, prop, receiver) {
+        // console.log(`Prop: ${prop}`);
         if(_.includes(_.keys(methods), prop)) {
           return function() {
+            let input = target.output || target._input;
             let method = methods[prop];
             let output = null;
             if(_.isArray(target._input) && method._applicableOnArray) {
               output = target._input.map(e => method.apply(target, [e, ...arguments]));
             }
             else {
-              output = method.apply(target, [target._input, ...arguments]);
+              output = method.apply(target, [target._input, ...arguments, proxy]);
             }
 
             target._output = output;
           }
         } else if(!target[prop]) {
           return function(val) {
-            let input = target._output || target._input;
+            let input = target.output || target._input;
 
             input[prop] = val;
 
@@ -41,9 +46,9 @@ let proxy = new Proxy(Jist, {
     };
 
 
-    var classInstance = new Jist(...argumentsList);
+    let classInstance = new Jist(...argumentsList);
     
-    var proxy = new Proxy(classInstance, h);
+    let proxy = new Proxy(classInstance, h);
     return proxy;
   }
   

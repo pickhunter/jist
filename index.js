@@ -3,8 +3,8 @@ const Jist = require('./jist');
 module.exports = {
   convert: (input, strategy) => {
     let jist = new Jist(input);
-    strategy.apply(jist, [jist]);
+    strategy.apply(input, [jist]);
 
-    return jist._output;
+    return jist.output;
   }
 };

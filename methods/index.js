@@ -3,7 +3,7 @@ const _ = require('lodash');
 
 let methods = {};
 
-fs.readdirSync('./methods')
+fs.readdirSync(`${__dirname}`)
   .filter(item => /[.]js$/.test(item) && item != 'index.js')
   .map(file => file.split('.js')[0])
   .forEach((file) => {
