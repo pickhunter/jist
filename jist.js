@@ -23,21 +23,28 @@ let proxy = new Proxy(Jist, {
             
             let method = methods[prop];
             let output = null;
-            if(_.isArray(target._input) && method._applicableOnArray) {
-              output = target._input.map(e => method.apply(target, [e, ...arguments]));
+            
+            if(_.isArray(input) && method._applicableOnArray) {
+              output = input.map(e => method.apply(target, [e, ...arguments]));
             }
             else {
-              output = method.apply(target, [target._input, ...arguments]);
+              output = method.apply(target, [input, ...arguments]);
             }
 
             target._output = output;
+            return output;
           }
         } else if(!target[prop]) {
           return function() {
             let method = methods.set;
-            output = method.apply(target, [target._input, prop, ...arguments]);
-
+            if(_.isArray(input) && method._applicableOnArray) {
+              output = input.map(e => method.apply(target, [e, prop, ...arguments]));
+            } else {
+              output = method.apply(target, [input, prop, ...arguments]);
+            }
+            
             target._output = output;
+            return output;
           };
         } else {
           return target[prop];

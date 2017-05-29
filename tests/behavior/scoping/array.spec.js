@@ -50,4 +50,35 @@ describe('Conversion', () => {
     });
 
   });
+
+  it('should set an array', () => {
+    let sourceData = {
+      array: [{
+        key1: 'foo',
+        key2: 'bar'
+      }, {
+        key1: 'foo',
+        key2: 'bar'
+      }]
+    };
+    
+    let conversion = jist.convert(sourceData, (jist) => {
+      jist.rohit(sourceData.array, function(jist) {
+        jist.pick('key1');
+        debugger
+        jist.yo('!');
+      });
+    });
+
+    conversion.rohit.length.should.equal(sourceData.array.length);
+
+    conversion.rohit.forEach((e) => {
+      e.should.have.property('key1');
+      // e.should.have.property('yo');
+      // e.yo.should.equal('1');
+      e.key1.should.equal('foo');
+      e.should.not.have.property('key2');
+    });
+
+  });
 });
