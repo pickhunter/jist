@@ -1,7 +1,7 @@
 const Jist = require('./jist');
 const fs = require('fs');
 
-module.exports = {
+let jistModule = {
   convert: (input, strategy) => {
     let jist = new Jist(input);
     strategy.apply(input, [jist]);
@@ -10,19 +10,24 @@ module.exports = {
   },
 
   register: function(expressApp){
-    let self = this;
 
-    expressApp.engine('jist', function (filePath, scope, callback) {
-      fs.readFile(filePath, function (err, content) {
-        if (err) return callback(err);
-        let renderer = Function('jist', content);
-
-        let rendered = self.convert(scope, renderer);
-
-        return callback(null, rendered)
-      })
-    });
+    expressApp.engine('jist', this.renderFile);
 
     expressApp.set('view engine', 'jist');
   }
 };
+
+jistModule.renderFile = function(filePath, scope, callback) {
+  fs.readFile(filePath, (err, content) => {
+    if (err) return callback(err);
+    let renderer = Function('jist', content);
+
+    let rendered = jistModule.convert(scope, renderer);
+
+    return callback(null, rendered);
+  });
+};
+
+jistModule._express = jistModule.renderFile;
+
+module.exports = jistModule;
