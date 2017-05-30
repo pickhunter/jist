@@ -10,15 +10,15 @@ let func = (input, mapper, mapperWhenKey) => {
     theInput = input[mapper];
   }
 
-  theInput.map((el, i) => {
+  theInput = theInput.map((el, i) => {
     let Jist = require('../jist');
     let jist = new Jist(el);
     theMapper.apply(el, [el, i, jist]);
-
+    
     return jist.output;
   });
 
-  return input;
+  return theInput;
 };
 
 module.exports = func;

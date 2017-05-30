@@ -14,10 +14,13 @@ describe('Conversion by implicit pick', () => {
     
     let conversion = jist.convert(sourceData, function(jist) {
       jist.rohit(sourceData.arr, 'key1');
+      jist.except('arr');
     });
 
+    console.log('TRACE', conversion);
+
     conversion.rohit.length.should.equal(sourceData.arr.length);
-    conversion.rohit.should.not.have.property('arr');
+    conversion.should.not.have.property('arr');
     conversion.rohit[0].key1.should.equal('foo');
     conversion.should.not.have.property('key2');
   });

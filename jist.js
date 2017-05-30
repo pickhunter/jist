@@ -16,7 +16,8 @@ let proxy = new Proxy(Jist, {
   construct: function(target, argumentsList, newTarget) {
     let h = {
       get: function(target, prop, receiver) {
-        let input = target.output || target._input;
+        // let input = target.output || target._input;
+        let input = target.output ? target.output : _.cloneDeep(target._input);
 
         if(_.includes(_.keys(methods), prop)) {
           return function() {
