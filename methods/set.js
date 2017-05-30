@@ -12,15 +12,31 @@ let transform = (scope, transformer) => {
 };
 
 let makeArgs = (possiblyVal, possiblyTransformer) => {
+
+  let transformer = pass;
+
+  if(_.isFunction(possiblyTransformer)) {
+    transformer = function(input){
+      return transform(input, possiblyTransformer);
+    };
+  }
+
+  else if(_.isString(possiblyTransformer) || _.isArray(possiblyTransformer)) {
+    transformer = function(input) {
+      return transform(input, function(jist) {
+        jist.pick(possiblyTransformer);
+      });
+    };
+  }
+
+
   return {
     valueMaker: _.isFunction(possiblyVal) ? function() {
       return transform({}, possiblyVal);
     } : function() {
       return possiblyVal;
     },
-    transformer: _.isFunction(possiblyTransformer) ? function(input){
-      return transform(input, possiblyTransformer);
-    } : pass
+    transformer: transformer
   };
 };
 
@@ -31,8 +47,6 @@ let func = (input, key, val, transformer) => {
   input[key] = args.valueMaker();
 
   input[key] = args.transformer(input[key]);
-
-  debugger
   
   return input;
 
