@@ -1,6 +1,6 @@
 {
   "name": "@rohhittt/jist",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Expressive JSON generator for generating JSON responses easily",
   "main": "index.js",
   "scripts": {
