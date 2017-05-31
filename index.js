@@ -17,9 +17,9 @@ let jistModule = {
     return this.convert(...arguments);
   },
 
-  register: function(expressApp){
+  register: function(expressApp, options){
 
-    expressApp.engine('jist', this.renderFile);
+    expressApp.engine('jist', this.getFileRenderer(options));
 
     expressApp.set('view engine', 'jist');
   }
